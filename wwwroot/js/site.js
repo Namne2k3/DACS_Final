@@ -1137,9 +1137,6 @@ function handleLoadAllComments(blogId) {
             return response.json();
         })
         .then(data => {
-
-            console.log(data.commentHtml);
-            // cập nhật giao diện người dùng với dữ liệu mới
             var commentContainer = document.getElementById("comment_container_lower_" + blogId);
             if (commentContainer) {
                 commentContainer.innerHTML = '';
