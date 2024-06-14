@@ -106,10 +106,15 @@ namespace Doan_Web_CK.Hubs
         }
         public async Task SendToUser(string user, string message, string chatRoomId, List<string> arrayImageMessages)
         {
+            // lay dc thong tin nguoi gui hien tai
             var currentUser = await _accountRepository.GetByIdAsync(user);
+
+            // lay dc thong tin chatroom
             var chatRoomGroup = await _chatRoomRepository.GetByIdAsync(int.Parse(chatRoomId));
 
             var sender = await _accountRepository.GetByIdAsync(user);
+
+
             var time = DateTime.Now;
             var msId = "";
             if (chatRoomGroup != null)
@@ -140,6 +145,7 @@ namespace Doan_Web_CK.Hubs
                 time = newMessage.Time;
                 msId = newMessage.Id.ToString();
 
+                // gui tin nhan cho ca 2 phia
                 foreach (var userItem in chatRoomGroup.Users)
                 {
                     if (userItem.Id == currentUser.Id)

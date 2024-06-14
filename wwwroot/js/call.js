@@ -80,7 +80,7 @@ const myPeer = new Peer();
 // hàm này được chạy mỗi khi peer khởi động và có được một id đại diện duy nhất từ máy chủ peerjs
 myPeer.on('open', id => {
     userId = id;
-    console.log("Check userId >>> ", userId);
+    // console.log("Check userId from call.js >>> ", userId);
     // const startSignalR = async () => {
     //     await callconnection.start();
     //     await callconnection.invoke("JoinRoom", ROOM_ID, userId)
@@ -102,6 +102,7 @@ function initLocalStream() {
     }).then(stream => {
         addVideoStream(myVideo, stream)
         localStream = stream
+        console.log("Da thuc hien init");
     })
 }
 initLocalStream();
@@ -111,17 +112,17 @@ callconnection.on('user-connected', id => {
     // kiểm tra có phải user ban đầu khởi tạo callroom ko
     // nếu ko thì connect tới user mới
 
-    console.log("userId >>> ", userId)
-    console.log("Id >>> ", id)
+    // console.log("userId >>> ", userId)
+    // console.log("Id >>> ", id)
     if (userId === id)
         return;
 
-    console.log(`User connected: ${id}`)
-    connectNewUser(id);
+    // console.log(`User connected: ${id}`)
+    connectNewUser(id); // dua hinh anh
 })
 
 callconnection.on("user-disconnected", id => {
-    console.log(`User disconnected: ${id}`)
+    // console.log(`User disconnected: ${id}`)
 
     if (Peers[id])
         Peers[id].close();
@@ -133,12 +134,15 @@ callconnection.on("user-disconnected", id => {
 // từ đó user mới có thể thấy được hình ảnh của ta
 myPeer.on('call', call => {
     call.answer(localStream)
-    console.log("thuc hien lenh call")
+    // console.log("thuc hien lenh call")
+
+    console.log("Check localstream >>> ", localStream);
 
     const userVideo = document.createElement('video')
 
     // them hình ành video của mình truyền sang user mới
     call.on('stream', userVideoStream => {
+        console.log("thuc hien connectusermoi ben phia user");
         addVideoStream(userVideo, userVideoStream)
     })
 
@@ -197,7 +201,7 @@ const connectNewUser = (userId) => {
     // thêm hình ảnh video của user mới bên phía mình
     call.on('stream', userVideoStream => {
 
-        console.log('thuc hien connectusermoi')
+        console.log('thuc hien ben phia chu')
         addVideoStream(userVideo, userVideoStream)
     })
 

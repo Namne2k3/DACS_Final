@@ -741,10 +741,18 @@ function handleSendMessageByClick(event) {
 function handleSendMessage(event) {
     if (event.keyCode == 13) {
         if (!event.shiftKey) {
+
+            // lay id cua nguoi gui
             var user = document.getElementById("userInput").value;
+
+            // lay id cua nguoi nhan
             var receiverConnectionId = document.getElementById("receiverId").value;
+
             var message = document.getElementById("messageInput").value;
+
+            // lay chatroomId
             var chatRoomId = document.getElementById('chatRoom_Id').value;
+
             if (message != "" || arrayImageMessages.length > 0) {
                 connection.invoke("SendToUser", user, message, chatRoomId, arrayImageMessages).catch(function (err) {
                     return console.log(err.toString());
@@ -838,7 +846,7 @@ connection.on("ImageUploaded", function (imageData) {
 
 connection.start().then(function () {
     connection.invoke("GetConnectionId").then(function (id) {
-        console.log("Connected");
+        console.log("Check user id >>> ", id);
         if (document.getElementById("uploadImage")) {
             document.getElementById("uploadImage").addEventListener("change", function (event) {
                 var userId = document.getElementById('userInput');
